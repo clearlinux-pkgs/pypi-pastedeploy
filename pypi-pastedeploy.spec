@@ -6,7 +6,7 @@
 #
 Name     : pypi-pastedeploy
 Version  : 2.1.1
-Release  : 64
+Release  : 65
 URL      : https://files.pythonhosted.org/packages/3f/98/179626030d6b3f04e4471aae01f1eae7539347fa7bb8f1228ea4ed600054/PasteDeploy-2.1.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/3f/98/179626030d6b3f04e4471aae01f1eae7539347fa7bb8f1228ea4ed600054/PasteDeploy-2.1.1.tar.gz
 Source1  : https://files.pythonhosted.org/packages/3f/98/179626030d6b3f04e4471aae01f1eae7539347fa7bb8f1228ea4ed600054/PasteDeploy-2.1.1.tar.gz.asc
@@ -63,7 +63,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1653350378
+export SOURCE_DATE_EPOCH=1656389580
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -101,7 +101,7 @@ popd
 ## Remove excluded files
 rm -f %{buildroot}*/usr/lib/python3.*/site-packages/paste/deploy/paster_templates/paste_deploy/+package+/sampleapp.py_tmpl
 rm -f %{buildroot}*/usr/lib/python3.*/site-packages/paste/deploy/paster_templates/paste_deploy/+package+/wsgiapp.py_tmpl
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
