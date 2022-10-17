@@ -1,5 +1,5 @@
 PKG_NAME := pypi-pastedeploy
-URL = https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz
+URL = https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common

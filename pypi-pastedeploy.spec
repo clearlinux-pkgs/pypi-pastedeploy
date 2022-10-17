@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x27D6E89D63C42919 (mmericke@gmail.com)
 #
 Name     : pypi-pastedeploy
-Version  : 3.0
-Release  : 70
-URL      : https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz
-Source0  : https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz
-Source1  : https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz.asc
+Version  : 3.0.1
+Release  : 71
+URL      : https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz
+Source0  : https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz
+Source1  : https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz.asc
 Summary  : Load, configure, and compose WSGI applications and servers
 Group    : Development/Tools
 License  : MIT
@@ -59,10 +59,10 @@ python3 components for the pypi-pastedeploy package.
 
 
 %prep
-%setup -q -n PasteDeploy-3.0
-cd %{_builddir}/PasteDeploy-3.0
+%setup -q -n PasteDeploy-3.0.1
+cd %{_builddir}/PasteDeploy-3.0.1
 pushd ..
-cp -a PasteDeploy-3.0 buildavx2
+cp -a PasteDeploy-3.0.1 buildavx2
 popd
 
 %build
@@ -70,7 +70,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1666020225
+export SOURCE_DATE_EPOCH=1666049018
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
