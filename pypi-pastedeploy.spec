@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x27D6E89D63C42919 (mmericke@gmail.com)
 #
 Name     : pypi-pastedeploy
-Version  : 2.1.1
-Release  : 69
-URL      : https://files.pythonhosted.org/packages/3f/98/179626030d6b3f04e4471aae01f1eae7539347fa7bb8f1228ea4ed600054/PasteDeploy-2.1.1.tar.gz
-Source0  : https://files.pythonhosted.org/packages/3f/98/179626030d6b3f04e4471aae01f1eae7539347fa7bb8f1228ea4ed600054/PasteDeploy-2.1.1.tar.gz
-Source1  : https://files.pythonhosted.org/packages/3f/98/179626030d6b3f04e4471aae01f1eae7539347fa7bb8f1228ea4ed600054/PasteDeploy-2.1.1.tar.gz.asc
+Version  : 3.0
+Release  : 70
+URL      : https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz
+Source0  : https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz
+Source1  : https://files.pythonhosted.org/packages/85/3f/bcfc91c61ef3c809d304cd553077af0260121df3e224fc268059f09343d4/PasteDeploy-3.0.tar.gz.asc
 Summary  : Load, configure, and compose WSGI applications and servers
 Group    : Development/Tools
 License  : MIT
@@ -17,11 +17,19 @@ Requires: pypi-pastedeploy-license = %{version}-%{release}
 Requires: pypi-pastedeploy-python = %{version}-%{release}
 Requires: pypi-pastedeploy-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
+BuildRequires : pypi(py)
 BuildRequires : pypi(setuptools)
 BuildRequires : pypi-nose
+BuildRequires : pypi-pluggy
+BuildRequires : pypi-pytest
+BuildRequires : pypi-tox
+BuildRequires : pypi-virtualenv
 
 %description
+This tool provides code to load WSGI applications and servers from
 URIs. These URIs can refer to Python eggs for INI-style configuration
+files.  `Paste Script <https://github.com/cdent/pastescript>`_ provides
+commands to serve applications based on this configuration file.
 
 %package license
 Summary: license components for the pypi-pastedeploy package.
@@ -45,17 +53,16 @@ Summary: python3 components for the pypi-pastedeploy package.
 Group: Default
 Requires: python3-core
 Provides: pypi(pastedeploy)
-Requires: pypi(setuptools)
 
 %description python3
 python3 components for the pypi-pastedeploy package.
 
 
 %prep
-%setup -q -n PasteDeploy-2.1.1
-cd %{_builddir}/PasteDeploy-2.1.1
+%setup -q -n PasteDeploy-3.0
+cd %{_builddir}/PasteDeploy-3.0
 pushd ..
-cp -a PasteDeploy-2.1.1 buildavx2
+cp -a PasteDeploy-3.0 buildavx2
 popd
 
 %build
@@ -63,30 +70,30 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656393092
+export SOURCE_DATE_EPOCH=1666020225
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
 export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
-python3 setup.py build
-
+python3 -m build --wheel --skip-dependency-check --no-isolation
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
-export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -msse2avx"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -msse2avx "
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
-python3 setup.py build
+python3 -m build --wheel --skip-dependency-check --no-isolation
 
 popd
+
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/pypi-pastedeploy
-cp %{_builddir}/PasteDeploy-2.1.1/license.txt %{buildroot}/usr/share/package-licenses/pypi-pastedeploy/391729571488896efa70494919f96aab67116ad1
-python3 -tt setup.py build  install --root=%{buildroot}
+cp %{_builddir}/PasteDeploy-%{version}/license.txt %{buildroot}/usr/share/package-licenses/pypi-pastedeploy/391729571488896efa70494919f96aab67116ad1 || :
+pip install --root=%{buildroot} --no-deps --ignore-installed dist/*.whl
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -96,7 +103,7 @@ export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
-python3 -tt setup.py build install --root=%{buildroot}-v3
+pip install --root=%{buildroot}-v3 --no-deps --ignore-installed dist/*.whl
 popd
 ## Remove excluded files
 rm -f %{buildroot}*/usr/lib/python3.*/site-packages/paste/deploy/paster_templates/paste_deploy/+package+/sampleapp.py_tmpl
