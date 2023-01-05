@@ -6,7 +6,7 @@
 #
 Name     : pypi-pastedeploy
 Version  : 3.0.1
-Release  : 73
+Release  : 75
 URL      : https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz
 Source1  : https://files.pythonhosted.org/packages/af/8f/1b09eac08a9a77706f30aa530ecf833bc1b3c05c4693eee9e37f91690614/PasteDeploy-3.0.1.tar.gz.asc
@@ -14,7 +14,6 @@ Summary  : Load, configure, and compose WSGI applications and servers
 Group    : Development/Tools
 License  : MIT
 Requires: pypi-pastedeploy-license = %{version}-%{release}
-Requires: pypi-pastedeploy-python = %{version}-%{release}
 Requires: pypi-pastedeploy-python3 = %{version}-%{release}
 BuildRequires : buildreq-distutils3
 BuildRequires : pypi(py)
@@ -24,6 +23,9 @@ BuildRequires : pypi-pluggy
 BuildRequires : pypi-pytest
 BuildRequires : pypi-tox
 BuildRequires : pypi-virtualenv
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 
 %description
 This tool provides code to load WSGI applications and servers from
@@ -70,17 +72,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1666049018
+export SOURCE_DATE_EPOCH=1672297701
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$FFLAGS -fno-lto "
-export FFLAGS="$FFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 -m build --wheel --skip-dependency-check --no-isolation
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -msse2avx"
-export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 -msse2avx "
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
