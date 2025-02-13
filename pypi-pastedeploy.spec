@@ -7,7 +7,7 @@
 #
 Name     : pypi-pastedeploy
 Version  : 3.1.0
-Release  : 80
+Release  : 81
 URL      : https://files.pythonhosted.org/packages/e3/97/0c4a613ec96a54d21daa7e089178263915554320402e89b4e319436a63cb/PasteDeploy-3.1.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/e3/97/0c4a613ec96a54d21daa7e089178263915554320402e89b4e319436a63cb/PasteDeploy-3.1.0.tar.gz
 Summary  : Load, configure, and compose WSGI applications and servers
